@@ -37,7 +37,7 @@
 
 (defn print-all-threads []
   (doseq [[k v] (Thread/getAllStackTraces)]
-    (prn (.getName k))
+    (prn (.getName ^Thread k))
     (doseq [s v]
       (prn s))))
 
