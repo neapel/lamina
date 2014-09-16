@@ -98,6 +98,12 @@
   clojure.lang.IDeref
   (deref [_] value)
 
+  clojure.lang.IBlockingDeref
+  (deref [_ _ _] value)
+
+  clojure.lang.IPending
+  (isRealized [_] true)
+
   clojure.lang.IMeta
   clojure.lang.IReference
   (meta [_] metadata)
@@ -154,6 +160,12 @@
         (or
           (codes/error-code->exception error)
           (Exception. (pr-str error))))))
+
+  clojure.lang.IBlockingDeref
+  (deref [this _ _] (deref this))
+
+  clojure.lang.IPending
+  (isRealized [_] true)
 
   clojure.lang.IMeta
   clojure.lang.IReference

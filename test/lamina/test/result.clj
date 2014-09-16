@@ -48,6 +48,8 @@
 (deftest test-success-result
   (let [r (success-result 1)] 
     (is (= 1 @r))
+    (is (= 1 (deref r 10 :timeout)))
+    (is (realized? r))
     (is (= 1 (success-value r nil)))
     (is (= ::none (error-value r ::none)))
     (is (= :success (result r)))
@@ -66,6 +68,8 @@
   (let [ex (IllegalStateException. "boom")
         r (error-result ex)]
     (is (thrown? IllegalStateException @r))
+    (is (thrown? IllegalStateException (deref r 10 :timeout)))
+    (is (realized? r))
     (is (= ::none (success-value r ::none)))
     (is (= ex (error-value r nil)))
     (is (= :error (result r)))
